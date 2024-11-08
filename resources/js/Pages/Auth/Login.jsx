@@ -1,10 +1,12 @@
 import Checkbox from '@/Components/Checkbox';
+import Icon from '@/Components/Icon';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { useState } from 'react';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -12,6 +14,10 @@ export default function Login({ status, canResetPassword }) {
         password: '',
         remember: false,
     });
+
+    const [isVisibledPassword, setIsVisibledPassword] = useState(false);
+    
+    const togglePasswordVisibility = () => setIsVisibledPassword(!isVisibledPassword);
 
     const submit = (e) => {
         e.preventDefault();
@@ -39,6 +45,7 @@ export default function Login({ status, canResetPassword }) {
                         id="email"
                         type="email"
                         name="email"
+                        placeholder="Digite o e-mail do usuário"
                         value={data.email}
                         className="mt-1 block w-full"
                         autoComplete="username"
@@ -52,15 +59,29 @@ export default function Login({ status, canResetPassword }) {
                 <div className="mt-4">
                     <InputLabel htmlFor="password" value="Senha" />
 
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
+                    <div className="relative">
+                        <TextInput
+                            id="password"
+                            type={isVisibledPassword ? "text" : "password"}
+                            name="password"
+                            placeholder="Digite a Senha"
+                            value={data.password}
+                            className="mt-1 block w-full"
+                            autoComplete="current-password"
+                            onChange={(e) => setData('password', e.target.value)}
+                        />
+                        <button
+                            type="button"
+                            className='absolute right-2 top-[10px] hover:opacity-70 duration-500'
+                            onClick={togglePasswordVisibility}
+                        >
+                            {isVisibledPassword ? (
+                                <Icon icon="fa-regular fa-eye-slash" />
+                            ) : (
+                                <Icon icon="fa-regular fa-eye" />
+                            )}
+                        </button>
+                    </div>
 
                     <InputError message={errors.password} className="mt-2" />
                 </div>
@@ -84,7 +105,7 @@ export default function Login({ status, canResetPassword }) {
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
-                            className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
+                            className="rounded-md text-sm text-gray-600 no-underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800 hover:underline"
                         >
                             Esqueceu sua senha?
                         </Link>
