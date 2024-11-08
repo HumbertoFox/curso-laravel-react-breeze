@@ -13,10 +13,10 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::firstOrCreate(
-            ['email' => 'cesar@celke.com.br'],
+            ['email' => 'betofoxnet.info@betofoxnet.com.br'],
             [
-                'name' => 'Cesar',
-                'email' => 'cesar@celke.com.br',
+                'name' => 'Humberto',
+                'email' => 'betofoxnet.info@betofoxnet.com.br',
                 'password' => '123456A#',
             ]
         );

@@ -94,6 +94,13 @@ export default function Login({ status, canResetPassword }) {
                         Conecte-se
                     </PrimaryButton>
                 </div>
+                <p className="ms-2 text-sm text-gray-600 dark:text-gray-400 pt-5">
+                    Usuário: betofoxnet.info@betofoxnet.com.br
+                </p>
+
+                <p className="ms-2 text-sm text-gray-600 dark:text-gray-400">
+                    Senha: 123456A#
+                </p>
             </form>
         </GuestLayout>
     );
