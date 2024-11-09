@@ -1,4 +1,5 @@
 import DangerButton from '@/Components/DangerButton';
+import Icon from '@/Components/Icon';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import Modal from '@/Components/Modal';
@@ -9,6 +10,7 @@ import { useRef, useState } from 'react';
 
 export default function DeleteUserForm({ className = '' }) {
     const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
+    const [isVisibledPassword, setIsVisibledPassword] = useState(false);
     const passwordInput = useRef();
 
     const {
@@ -22,6 +24,8 @@ export default function DeleteUserForm({ className = '' }) {
     } = useForm({
         password: '',
     });
+
+    const togglePasswordVisibility = () => setIsVisibledPassword(!isVisibledPassword);
 
     const confirmUserDeletion = () => {
         setConfirmingUserDeletion(true);
@@ -81,22 +85,35 @@ export default function DeleteUserForm({ className = '' }) {
                         <InputLabel
                             htmlFor="password"
                             value="Senha"
-                            className="sr-only"
                         />
+                        
+                        <div className='relative w-3/4'>
+                            <TextInput
+                                id="password"
+                                type={isVisibledPassword ? "text" : "password"}
+                                name="password"
+                                ref={passwordInput}
+                                value={data.password}
+                                onChange={(e) =>
+                                    setData('password', e.target.value)
+                                }
+                                className="mt-1 block w-full"
+                                isFocused
+                                placeholder="Senha"
+                            />
 
-                        <TextInput
-                            id="password"
-                            type="password"
-                            name="password"
-                            ref={passwordInput}
-                            value={data.password}
-                            onChange={(e) =>
-                                setData('password', e.target.value)
-                            }
-                            className="mt-1 block w-3/4"
-                            isFocused
-                            placeholder="Senha"
-                        />
+                            <button
+                                type="button"
+                                className='absolute right-2 top-[10px] hover:opacity-70 duration-500'
+                                onClick={togglePasswordVisibility}
+                            >
+                                {isVisibledPassword ? (
+                                    <Icon icon="fa-regular fa-eye-slash" />
+                                ) : (
+                                    <Icon icon="fa-regular fa-eye" />
+                                )}
+                            </button>
+                        </div>
 
                         <InputError
                             message={errors.password}

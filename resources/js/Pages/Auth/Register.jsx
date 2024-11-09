@@ -8,15 +8,15 @@ import { Head, Link, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function Register() {
+    const [isVisibledPassword, setIsVisibledPassword] = useState(false);
+    const [isVisibledPasswordConfirm, setIsVisibledPasswordConfirm] = useState(false);
+
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
         password: '',
         password_confirmation: '',
     });
-
-    const [isVisibledPassword, setIsVisibledPassword] = useState(false);
-    const [isVisibledPasswordConfirm, setIsVisibledPasswordConfirm] = useState(false);
 
     const togglePasswordVisibility = () => setIsVisibledPassword(!isVisibledPassword);
     const togglePasswordConfirmVisibility = () => setIsVisibledPasswordConfirm(!isVisibledPasswordConfirm);
@@ -85,6 +85,7 @@ export default function Register() {
                             onChange={(e) => setData('password', e.target.value)}
                             required
                         />
+
                         <button
                             type="button"
                             className='absolute right-2 top-[10px] hover:opacity-70 duration-500'
@@ -106,6 +107,7 @@ export default function Register() {
                         htmlFor="password_confirmation"
                         value="Confirme sua senha"
                     />
+                    
                     <div className='relative'>
                         <TextInput
                             id="password_confirmation"
@@ -120,6 +122,7 @@ export default function Register() {
                             }
                             required
                         />
+
                         <button
                             type="button"
                             className='absolute right-2 top-[10px] hover:opacity-70 duration-500'
@@ -131,7 +134,6 @@ export default function Register() {
                                 <Icon icon="fa-regular fa-eye" />
                             )}
                         </button>
-
                     </div>
 
                     <InputError

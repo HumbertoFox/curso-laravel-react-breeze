@@ -1,14 +1,18 @@
+import Icon from '@/Components/Icon';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 export default function UpdatePasswordForm({ className = '' }) {
     const passwordInput = useRef();
     const currentPasswordInput = useRef();
+    const [isVisibledPasswordCurrent, setIsVisibledPasswordCurrent] = useState(false);
+    const [isVisibledPassword, setIsVisibledPassword] = useState(false);
+    const [isVisibledPasswordConfirm, setIsVisibledPasswordConfirm] = useState(false);
 
     const {
         data,
@@ -23,6 +27,10 @@ export default function UpdatePasswordForm({ className = '' }) {
         password: '',
         password_confirmation: '',
     });
+
+    const togglePasswordCurrentVisibility = () => setIsVisibledPasswordCurrent(!isVisibledPasswordCurrent);
+    const togglePasswordVisibility = () => setIsVisibledPassword(!isVisibledPassword);
+    const togglePasswordConfirmVisibility = () => setIsVisibledPasswordConfirm(!isVisibledPasswordConfirm);
 
     const updatePassword = (e) => {
         e.preventDefault();
@@ -64,17 +72,31 @@ export default function UpdatePasswordForm({ className = '' }) {
                         value="Senha atual"
                     />
 
-                    <TextInput
-                        id="current_password"
-                        ref={currentPasswordInput}
-                        value={data.current_password}
-                        onChange={(e) =>
-                            setData('current_password', e.target.value)
-                        }
-                        type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                    />
+                    <div className='relative'>
+                        <TextInput
+                            id="current_password"
+                            ref={currentPasswordInput}
+                            value={data.current_password}
+                            onChange={(e) =>
+                                setData('current_password', e.target.value)
+                            }
+                            type={isVisibledPasswordCurrent ? "text" : "password"}
+                            className="mt-1 block w-full"
+                            autoComplete="current-password"
+                        />
+
+                        <button
+                            type="button"
+                            className='absolute right-2 top-[10px] hover:opacity-70 duration-500'
+                            onClick={togglePasswordCurrentVisibility}
+                        >
+                            {isVisibledPasswordCurrent ? (
+                                <Icon icon="fa-regular fa-eye-slash" />
+                            ) : (
+                                <Icon icon="fa-regular fa-eye" />
+                            )}
+                        </button>
+                    </div>
 
                     <InputError
                         message={errors.current_password}
@@ -85,15 +107,29 @@ export default function UpdatePasswordForm({ className = '' }) {
                 <div>
                     <InputLabel htmlFor="password" value="Nova Senha" />
 
-                    <TextInput
-                        id="password"
-                        ref={passwordInput}
-                        value={data.password}
-                        onChange={(e) => setData('password', e.target.value)}
-                        type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                    />
+                    <div className='relative'>
+                        <TextInput
+                            id="password"
+                            ref={passwordInput}
+                            value={data.password}
+                            onChange={(e) => setData('password', e.target.value)}
+                            type={isVisibledPassword ? "text" : "password"}
+                            className="mt-1 block w-full"
+                            autoComplete="new-password"
+                        />
+
+                        <button
+                            type="button"
+                            className='absolute right-2 top-[10px] hover:opacity-70 duration-500'
+                            onClick={togglePasswordVisibility}
+                        >
+                            {isVisibledPassword ? (
+                                <Icon icon="fa-regular fa-eye-slash" />
+                            ) : (
+                                <Icon icon="fa-regular fa-eye" />
+                            )}
+                        </button>
+                    </div>
 
                     <InputError message={errors.password} className="mt-2" />
                 </div>
@@ -104,16 +140,30 @@ export default function UpdatePasswordForm({ className = '' }) {
                         value="Confirme sua senha"
                     />
 
-                    <TextInput
-                        id="password_confirmation"
-                        value={data.password_confirmation}
-                        onChange={(e) =>
-                            setData('password_confirmation', e.target.value)
-                        }
-                        type="password"
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                    />
+                    <div className='relative'>
+                        <TextInput
+                            id="password_confirmation"
+                            value={data.password_confirmation}
+                            onChange={(e) =>
+                                setData('password_confirmation', e.target.value)
+                            }
+                            type={isVisibledPasswordConfirm ? "text" : "password"}
+                            className="mt-1 block w-full"
+                            autoComplete="new-password"
+                        />
+
+                        <button
+                            type="button"
+                            className='absolute right-2 top-[10px] hover:opacity-70 duration-500'
+                            onClick={togglePasswordConfirmVisibility}
+                        >
+                            {isVisibledPasswordConfirm ? (
+                                <Icon icon="fa-regular fa-eye-slash" />
+                            ) : (
+                                <Icon icon="fa-regular fa-eye" />
+                            )}
+                        </button>
+                    </div>
 
                     <InputError
                         message={errors.password_confirmation}
@@ -137,6 +187,6 @@ export default function UpdatePasswordForm({ className = '' }) {
                     </Transition>
                 </div>
             </form>
-        </section>
+        </section >
     );
 }
