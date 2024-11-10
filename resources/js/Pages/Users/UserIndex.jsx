@@ -5,7 +5,9 @@ import WarningButton from "@/Components/Button/WarningButton";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 
-export default function UserIndex() {
+export default function UserIndex({ users }) {
+    console.log(users.data);
+
     return (
         <AuthenticatedLayout>
             <Head title="Listar Usuários" />
@@ -50,24 +52,26 @@ export default function UserIndex() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="px-6 py-2 text-sm text-gray-900 dark:text-gray-100"></td>
-                            <td className="px-6 py-2 text-sm text-gray-900 dark:text-gray-100"></td>
-                            <td className="hidden sm:table-cell px-6 py-2 text-sm text-gray-900 dark:text-gray-100"></td>
-                            <td className="px-6 py-2 text-center text-gray-900 dark:text-gray-100">
-                                <PrimaryButton className="ms-1">
-                                    Visualizar
-                                </PrimaryButton>
+                        {users.data.map((user, index) => (
+                            <tr key={index}>
+                                <td className="px-6 py-2 text-sm text-gray-900 dark:text-gray-100">{user.id}</td>
+                                <td className="px-6 py-2 text-sm text-gray-900 dark:text-gray-100">{user.name}</td>
+                                <td className="hidden sm:table-cell px-6 py-2 text-sm text-gray-900 dark:text-gray-100">{user.email}</td>
+                                <td className="px-6 py-2 text-center text-gray-900 dark:text-gray-100">
+                                    <PrimaryButton className="ms-1">
+                                        Visualizar
+                                    </PrimaryButton>
 
-                                <WarningButton className="ms-1">
-                                    Editar
-                                </WarningButton>
+                                    <WarningButton className="ms-1">
+                                        Editar
+                                    </WarningButton>
 
-                                <DangerButton className="ms-1">
-                                    Apagar
-                                </DangerButton>
-                            </td>
-                        </tr>
+                                    <DangerButton className="ms-1">
+                                        Apagar
+                                    </DangerButton>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

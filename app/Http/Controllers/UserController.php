@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -9,6 +10,8 @@ class UserController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('Users/UserIndex');
+        $users = User::paginate(10);
+
+        return Inertia::render('Users/UserIndex', ['users' => $users]);
     }
 }
