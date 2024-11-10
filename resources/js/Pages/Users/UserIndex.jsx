@@ -2,12 +2,11 @@ import DangerButton from "@/Components/Button/DangerButton";
 import PrimaryButton from "@/Components/Button/PrimaryButton";
 import SuccessButton from "@/Components/Button/SuccessButton";
 import WarningButton from "@/Components/Button/WarningButton";
+import Pagination from "@/Components/Pagination";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 
 export default function UserIndex({ users }) {
-    console.log(users.data);
-
     return (
         <AuthenticatedLayout>
             <Head title="Listar Usuários" />
@@ -41,7 +40,7 @@ export default function UserIndex({ users }) {
                 </div>
             </div>
 
-            <div className="overflow-hidden bg-white shadow-lg sm:rounded-lg dark:bg-gray-800">
+            <div className="overflow-hidden bg-white shadow-lg sm:rounded-lg dark:bg-gray-800 pb-4">
                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                     <thead className="bg-gray-50 dark:bg-gray-700">
                         <tr>
@@ -74,6 +73,9 @@ export default function UserIndex({ users }) {
                         ))}
                     </tbody>
                 </table>
+                {users.per_page > 9 && (
+                    <Pagination links={users.links} currentPage={users.current_page} />
+                )}
             </div>
         </AuthenticatedLayout>
     );
