@@ -32,9 +32,11 @@ export default function UserIndex({ users }) {
                     <div className="flex justify-between items-center p-3">
                         <h3 className="text-lg">Listar</h3>
                         <div className="flex space-x-4">
-                            <SuccessButton className="ms-4">
-                                Cadastrar
-                            </SuccessButton>
+                            <Link href={route('users.create')}>
+                                <SuccessButton className="ms-4">
+                                    Cadastrar
+                                </SuccessButton>
+                            </Link>
                         </div>
                     </div>
 

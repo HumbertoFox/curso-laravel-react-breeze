@@ -1,8 +1,10 @@
 import PrimaryButton from "@/Components/Button/PrimaryButton";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 
 export default function UserShow({ user }) {
+    const { flash } = usePage().props;
+
     return (
         <AuthenticatedLayout>
             <Head title="Listar Usuários" />
@@ -39,6 +41,12 @@ export default function UserShow({ user }) {
                             </Link>
                         </div>
                     </div>
+
+                    {flash.success && (
+                        <div className="p-3 m-3 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400">
+                            <span>{flash.success}</span>
+                        </div>
+                    )}
 
                     <div className="bg-gray-50 text-sm dark:bg-gray-700 p-4">
                         <div className="mb-2">
