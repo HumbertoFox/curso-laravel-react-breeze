@@ -2,7 +2,7 @@ import { Link } from "@inertiajs/react";
 
 export default function Pagination({ links, currentPage }) {
     return (
-        <div className="flex justify-center mt-6 space-x-2">
+        <div className="flex justify-center my-4 space-x-2">
             {links.filter((link, index) => {
                 const isPrevious = link.label === "&laquo; Anterior";
                 const isNext = link.label === "Próximo &raquo;";
