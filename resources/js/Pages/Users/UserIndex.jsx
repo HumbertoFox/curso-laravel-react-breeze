@@ -1,47 +1,12 @@
-import DangerButton from "@/Components/Button/DangerButton";
 import PrimaryButton from "@/Components/Button/PrimaryButton";
 import SuccessButton from "@/Components/Button/SuccessButton";
 import WarningButton from "@/Components/Button/WarningButton";
+import ConfirmDeleteButton from "@/Components/Delete/ConfirmDeleteButton";
 import Pagination from "@/Components/Pagination";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, useForm } from "@inertiajs/react";
-import Swal from "sweetalert2";
+import { Head, Link } from "@inertiajs/react";
 
 export default function UserIndex({ users }) {
-    const { delete: destroy, processing } = useForm();
-
-    const handleDelete = (userId) => {
-        Swal.fire({
-            title: "Tem certeza?",
-            text: "Você não poderá reverter esta ação!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3b82f6",
-            cancelButtonColor: "#ef4444",
-            confirmButtonText: "Sim, Excluir!",
-            cancelButtonText: "Cancelar",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                destroy(route('users.destroy', userId), {
-                    onSuccess: ({ props }) => {
-                        Swal.fire({
-                            title: "Excluído!",
-                            text: props.flash.success,
-                            icon: "success"
-                        });
-                    },
-                    onError: () => {
-                        Swal.fire({
-                            title: "Erro!",
-                            text: "Ocorreu um erro ao tentar exluir o usuário.",
-                            icon: "error",
-                        });
-                    }
-                });
-            }
-        });
-    }
-
     return (
         <AuthenticatedLayout>
             <Head title="Listar Usuários" />
@@ -105,13 +70,10 @@ export default function UserIndex({ users }) {
                                                 </WarningButton>
                                             </Link>
 
-                                            <DangerButton
-                                                className="ms-1"
-                                                onClick={() => handleDelete(user.id)}
-                                                disabled={processing}
-                                            >
-                                                Apagar
-                                            </DangerButton>
+                                            <ConfirmDeleteButton
+                                                id={user.id}
+                                                routeName={"users.destroy"}
+                                            />
                                         </td>
                                     </tr>
                                 ))}

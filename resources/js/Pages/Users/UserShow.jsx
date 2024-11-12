@@ -1,5 +1,6 @@
 import InfoButton from "@/Components/Button/InfoButton";
 import WarningButton from "@/Components/Button/WarningButton";
+import ConfirmDeleteButton from "@/Components/Delete/ConfirmDeleteButton";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, usePage } from "@inertiajs/react";
 
@@ -46,6 +47,11 @@ export default function UserShow({ user }) {
                                     Editar
                                 </WarningButton>
                             </Link>
+
+                            <ConfirmDeleteButton
+                                id={user.id}
+                                routeName={"users.destroy"}
+                            />
                         </div>
                     </div>
 
