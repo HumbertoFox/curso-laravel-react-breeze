@@ -71,7 +71,7 @@ export default function UserEdit({ user }) {
                                 <input
                                     id="name"
                                     type="text"
-                                    autoComplete
+                                    autoComplete="name"
                                     placeholder="Nome complerp dp Usuário"
                                     value={data.name}
                                     onChange={(e) => setData('name', e.target.value)}
@@ -90,7 +90,7 @@ export default function UserEdit({ user }) {
                                 <input
                                     id="email"
                                     type="email"
-                                    autoComplete
+                                    autoComplete="email"
                                     placeholder="E-mail"
                                     value={data.email}
                                     onChange={(e) => setData('email', e.target.value)}

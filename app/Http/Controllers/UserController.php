@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -12,7 +13,9 @@ class UserController extends Controller
 {
     public function index(): Response
     {
-        $users = User::orderByDesc('id')->paginate(10);
+        $users = User::orderByDesc('id')
+            ->where('id', '!=', Auth::user()->id)
+            ->paginate(10);
 
         return Inertia::render('Users/UserIndex', ['users' => $users]);
     }
@@ -96,6 +99,7 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return Redirect::route('users.index')->with('success', 'Usuário Excluído com Sucesse!');
+        return Redirect::route('users.index')
+            ->with('success', 'Usuário Excluído com Sucesse!');
     }
 }
