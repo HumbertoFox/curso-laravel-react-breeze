@@ -64,9 +64,11 @@ export default function UserIndex({ users }) {
                                                 </PrimaryButton>
                                             </Link>
 
-                                            <WarningButton className="ms-1">
-                                                Editar
-                                            </WarningButton>
+                                            <Link href={route('users.edit', { id: user.id })}>
+                                                <WarningButton className="ms-1">
+                                                    Editar
+                                                </WarningButton>
+                                            </Link>
 
                                             <DangerButton className="ms-1">
                                                 Apagar

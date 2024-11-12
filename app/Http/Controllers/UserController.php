@@ -33,7 +33,7 @@ class UserController extends Controller
             [
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users,email,',
-                'password' => 'required|string|min:8|confirmed'
+                'password' => 'required|string|min:8|confirmed',
             ],
             [
                 'name.required' => 'O campo nome é obrigatório!',
@@ -58,5 +58,37 @@ class UserController extends Controller
         ]);
 
         return Redirect::route('users.show', ['user' => $user->id])->with('success', 'Usuário Cadastrado com Sucesso!');
+    }
+
+    public function edit(User $user): Response
+    {
+        return Inertia::render('Users/UserEdit', ['user' => $user]);
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $request->validate(
+            [
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            ],
+            [
+                'name.required' => 'O campo nome é obrigatório!',
+                'name.string' => 'O campo nome deve ser uma string válida.',
+                'name.max' => 'O campo nome não pode ter mais que :max caracteres.',
+                'email.required' => 'O campo e-mail é obrigatório!',
+                'email.string' => 'O campo e-mail deve ser uma string válida.',
+                'email.email' => 'O campo e-mail deve ser um endereço de E-mail válido.',
+                'email.max' => 'O campo e-mail não pode ter mais que :max caracteres.',
+                'email.unique' => 'Este e-mail já esta cadastrado.',
+            ],
+        );
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
+
+        return Redirect::route('users.show', ['user' => $user->id])->with('success', 'Usuário Editado com Sucesse!');
     }
 }

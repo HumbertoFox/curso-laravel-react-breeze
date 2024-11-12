@@ -1,4 +1,5 @@
-import PrimaryButton from "@/Components/Button/PrimaryButton";
+import InfoButton from "@/Components/Button/InfoButton";
+import WarningButton from "@/Components/Button/WarningButton";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, usePage } from "@inertiajs/react";
 
@@ -33,11 +34,17 @@ export default function UserShow({ user }) {
                 <div className="overflow-hidden bg-white shadow-lg sm:rounded-lg dark:bg-gray-800 text-gray-900 dark:text-gray-100">
                     <div className="flex justify-between items-center p-3">
                         <h3 className="text-lg">Visializar</h3>
-                        <div className="flex space-x-4">
+                        <div className="flex space-x-1">
                             <Link href={route('users.index')}>
-                                <PrimaryButton className="ms-4 tex">
+                                <InfoButton className="text-sm">
                                     Listar
-                                </PrimaryButton>
+                                </InfoButton>
+                            </Link>
+
+                            <Link href={route('users.edit', { id: user.id })}>
+                                <WarningButton className="text-sm">
+                                    Editar
+                                </WarningButton>
                             </Link>
                         </div>
                     </div>
