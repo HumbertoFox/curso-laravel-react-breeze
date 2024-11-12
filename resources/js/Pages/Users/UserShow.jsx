@@ -1,3 +1,4 @@
+import AlertMessage from "@/Components/Alert/AlertMessage";
 import InfoButton from "@/Components/Button/InfoButton";
 import WarningButton from "@/Components/Button/WarningButton";
 import ConfirmDeleteButton from "@/Components/Delete/ConfirmDeleteButton";
@@ -55,11 +56,7 @@ export default function UserShow({ user }) {
                         </div>
                     </div>
 
-                    {flash.success && (
-                        <div className="p-3 m-3 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400">
-                            <span>{flash.success}</span>
-                        </div>
-                    )}
+                    <AlertMessage message={flash} />
 
                     <div className="bg-gray-50 text-sm dark:bg-gray-700 p-4">
                         <div className="mb-2">
