@@ -91,4 +91,11 @@ class UserController extends Controller
 
         return Redirect::route('users.show', ['user' => $user->id])->with('success', 'Usuário Editado com Sucesse!');
     }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return Redirect::route('users.index')->with('success', 'Usuário Excluído com Sucesse!');
+    }
 }

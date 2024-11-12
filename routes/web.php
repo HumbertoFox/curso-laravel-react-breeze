@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/store-user', [UserController::class, 'store'])->name('users.store');
     Route::get('/edit-user/{user}', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/update-user/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/destroy-user/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 });
 
 require __DIR__ . '/auth.php';

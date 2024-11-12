@@ -65,8 +65,8 @@ export default function UserCreate() {
                                 <input
                                     id="name"
                                     type="text"
-                                    autoComplete
-                                    placeholder="Nome complerp dp Usuário"
+                                    autoComplete="name"
+                                    placeholder="Nome completo do Usuário"
                                     value={data.name}
                                     onChange={(e) => setData('name', e.target.value)}
                                     className="w-full block mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:text-white"
@@ -84,7 +84,7 @@ export default function UserCreate() {
                                 <input
                                     id="email"
                                     type="email"
-                                    autoComplete
+                                    autoComplete="email"
                                     placeholder="E-mail"
                                     value={data.email}
                                     onChange={(e) => setData('email', e.target.value)}
@@ -103,6 +103,7 @@ export default function UserCreate() {
                                 <input
                                     id="password"
                                     type="password"
+                                    autoComplete="off"
                                     placeholder="Digite sua Senha"
                                     value={data.password}
                                     onChange={(e) => setData('password', e.target.value)}

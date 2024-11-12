@@ -4,9 +4,18 @@ import SuccessButton from "@/Components/Button/SuccessButton";
 import WarningButton from "@/Components/Button/WarningButton";
 import Pagination from "@/Components/Pagination";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, useForm, usePage } from "@inertiajs/react";
 
 export default function UserIndex({ users }) {
+    const { flash } = usePage().props;
+    const { delete: destroy, processing } = useForm();
+
+    const handleDelete = (userId) => {
+        if (window.confirm("Tem certeza que deseja deletar este usuário? ")) {
+            destroy(route('users.destroy', userId))
+        }
+    }
+
     return (
         <AuthenticatedLayout>
             <Head title="Listar Usuários" />
@@ -26,6 +35,12 @@ export default function UserIndex({ users }) {
                     </nav>
                 </div>
             </div>
+
+            {flash.success && (
+                <div className="p-3 m-3 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400">
+                    <span>{flash.success}</span>
+                </div>
+            )}
 
             <div className="max-w-8xl py-4 px-1 sm:px-0 lg:px-0">
                 <div className="overflow-hidden bg-white shadow-lg sm:rounded-lg dark:bg-gray-800 text-gray-900 dark:text-gray-100">
@@ -70,7 +85,11 @@ export default function UserIndex({ users }) {
                                                 </WarningButton>
                                             </Link>
 
-                                            <DangerButton className="ms-1">
+                                            <DangerButton
+                                                className="ms-1"
+                                                onClick={() => handleDelete(user.id)}
+                                                disabled={processing}
+                                            >
                                                 Apagar
                                             </DangerButton>
                                         </td>
