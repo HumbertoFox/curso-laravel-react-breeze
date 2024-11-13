@@ -1,12 +1,28 @@
+import AlertMessage from "@/Components/Alert/AlertMessage";
 import PrimaryButton from "@/Components/Button/PrimaryButton";
 import SuccessButton from "@/Components/Button/SuccessButton";
 import WarningButton from "@/Components/Button/WarningButton";
 import ConfirmDeleteButton from "@/Components/Delete/ConfirmDeleteButton";
 import Pagination from "@/Components/Pagination";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, useForm, usePage } from "@inertiajs/react";
 
-export default function UserIndex({ users }) {
+export default function UserIndex({ users, filters }) {
+    const { flash } = usePage().props;
+
+    const { data, setData, get } = useForm({
+        name: filters?.name || '',
+        email: filters?.email || '',
+        date_start: filters?.date_start || '',
+        date_end: filters?.date_end || '',
+    });
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+
+        get(route('users.index'));
+    }
+
     return (
         <AuthenticatedLayout>
             <Head title="Listar Usuários" />
@@ -39,6 +55,61 @@ export default function UserIndex({ users }) {
                             </Link>
                         </div>
                     </div>
+
+                    <AlertMessage message={flash} />
+
+                    <form onSubmit={handleSearch} className="w-full flex flex-col gap-1 p-2 bg-gray-100 dark:bg-gray-900 md:flex-wrap">
+                        <div className="w-full flex flex-col md:flex-row gap-1">
+                            <input
+                                type="text"
+                                value={data.name}
+                                autoComplete="name"
+                                placeholder="Nome"
+                                onChange={(e) => setData('name', e.target.value)}
+                                className="w-full md:w-1/4 px-3 py-1.5 text-sm rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none"
+                            />
+
+                            <input
+                                type="text"
+                                value={data.email}
+                                autoComplete="email"
+                                placeholder="E-mail"
+                                onChange={(e) => setData('email', e.target.value)}
+                                className="w-full md:w-1/4 px-3 py-1.5 text-sm rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none"
+                            />
+
+                            <input
+                                type="datetime-local"
+                                value={data.date_start}
+                                onChange={(e) => setData('date_start', e.target.value)}
+                                className="w-full md:w-1/4 px-3 py-1.5 text-sm rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none"
+                            />
+
+                            <input
+                                type="datetime-local"
+                                value={data.date_end}
+                                onChange={(e) => setData('date_end', e.target.value)}
+                                className="w-full md:w-1/4 px-3 py-1.5 text-sm rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none"
+                            />
+                        </div>
+
+                        <div className="flex justify-end gap-2 mt-1">
+                            <PrimaryButton
+                                type="submit"
+                                className="text-sm"
+                            >
+                                Pesquisar
+                            </PrimaryButton>
+
+                            <Link href={route('users.index')}>
+                                <WarningButton
+                                    className="text-sm"
+                                >
+                                    Limpar
+                                </WarningButton>
+                            </Link>
+                        </div>
+                    </form>
 
                     <div className="overflow-hidden bg-white shadow-sm dark:bg-gray-800">
                         <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">

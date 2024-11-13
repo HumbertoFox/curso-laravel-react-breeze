@@ -1,4 +1,4 @@
-import PrimaryButton from "@/Components/Button/PrimaryButton";
+import InfoButton from "@/Components/Button/InfoButton";
 import SuccessButton from "@/Components/Button/SuccessButton";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
@@ -47,9 +47,9 @@ export default function UserCreate() {
                         <h3 className="text-lg">Cadastrar</h3>
                         <div className="flex space-x-4">
                             <Link href={route('users.index')}>
-                                <PrimaryButton className="ms-4 text-sm">
+                                <InfoButton className="ms-4 text-sm">
                                     Listar
-                                </PrimaryButton>
+                                </InfoButton>
                             </Link>
                         </div>
                     </div>

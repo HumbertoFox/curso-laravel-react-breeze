@@ -11,13 +11,34 @@ use Inertia\Response;
 
 class UserController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $users = User::orderByDesc('id')
+        $users = User::when($request->has('name'), function ($whenQuery) use ($request) {
+            $whenQuery->where('name', 'like', '%' . $request->name . '%');
+        })
+            ->when($request->has('email'), function ($whenQuery) use ($request) {
+                $whenQuery->where('email', 'like', '%' . $request->email . '%');
+            })
+            ->when($request->filled('date_start'), function ($whenQuery) use ($request) {
+                $whenQuery->where('created_at', '>=', \Carbon\Carbon::parse($request->date_start)->format('Y-m-d H:i:s'));
+            })
+            ->when($request->filled('date_end'), function ($whenQuery) use ($request) {
+                $whenQuery->where('created_at', '<=', \Carbon\Carbon::parse($request->date_end)->format('Y-m-d H:i:s'));
+            })
+            ->orderByDesc('id')
             ->where('id', '!=', Auth::user()->id)
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
-        return Inertia::render('Users/UserIndex', ['users' => $users]);
+        return Inertia::render('Users/UserIndex', [
+            'users' => $users,
+            'filters' => [
+                'name' => $request->name,
+                'email' => $request->email,
+                'date_start' => $request->date_start,
+                'date_end' => $request->date_end,
+            ],
+        ]);
     }
 
     public function show(User $user): Response
