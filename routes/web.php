@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/update-user/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/destroy-user/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/generate-pdf-users', [UserReportController::class, 'generatePdf'])->name('users.generate-pdf');
+    Route::get('/generate-csv-users', [UserReportController::class, 'generateCsv'])->name('users.generate-csv');
 });
 
 require __DIR__ . '/auth.php';

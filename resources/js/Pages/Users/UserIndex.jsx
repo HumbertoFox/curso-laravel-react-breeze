@@ -31,6 +31,14 @@ export default function UserIndex({ users, filters }) {
         window.location.href = pdfUrl;
     }
 
+    function handleGenerateCsv() {
+        const queryString = new URLSearchParams(filters).toString();
+
+        const pdfUrl = `${route('users.generate-csv')}?${queryString}`;
+
+        window.location.href = pdfUrl;
+    }
+
     return (
         <AuthenticatedLayout>
             <Head title="Listar Usuários" />
@@ -67,6 +75,12 @@ export default function UserIndex({ users, filters }) {
                             >
                                 PDF
                             </WarningButton>
+                            <SuccessButton
+                            className="text-sm"
+                            onClick={handleGenerateCsv}
+                            >
+                                CSV
+                            </SuccessButton>
                         </div>
                     </div>
 
