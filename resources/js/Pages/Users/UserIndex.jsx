@@ -23,6 +23,14 @@ export default function UserIndex({ users, filters }) {
         get(route('users.index'));
     }
 
+    function handleGeneratePdf() {
+        const queryString = new URLSearchParams(filters).toString();
+
+        const pdfUrl = `${route('users.generate-pdf')}?${queryString}`;
+
+        window.location.href = pdfUrl;
+    }
+
     return (
         <AuthenticatedLayout>
             <Head title="Listar Usuários" />
@@ -55,9 +63,7 @@ export default function UserIndex({ users, filters }) {
                             </Link>
                             <WarningButton
                                 className="ms-1 text-sm"
-                                onClick={() => {
-                                    window.location.href = route('users.generate-pdf');
-                                }}
+                                onClick={handleGeneratePdf}
                             >
                                 PDF
                             </WarningButton>
