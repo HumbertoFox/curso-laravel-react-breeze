@@ -53,6 +53,14 @@ export default function UserIndex({ users, filters }) {
                                     Cadastrar
                                 </SuccessButton>
                             </Link>
+                            <WarningButton
+                                className="ms-1 text-sm"
+                                onClick={() => {
+                                    window.location.href = route('users.generate-pdf');
+                                }}
+                            >
+                                PDF
+                            </WarningButton>
                         </div>
                     </div>
 
@@ -152,7 +160,7 @@ export default function UserIndex({ users, filters }) {
                         </table>
                     </div>
 
-                    {users.per_page > 9 && (
+                    {users.last_page > 1 && (
                         <Pagination links={users.links} currentPage={users.current_page} />
                     )}
                 </div>

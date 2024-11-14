@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserReportController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit-user/{user}', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/update-user/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/destroy-user/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::get('/generate-pdf-users', [UserReportController::class, 'generatePdf'])->name('users.generate-pdf');
 });
 
 require __DIR__ . '/auth.php';
