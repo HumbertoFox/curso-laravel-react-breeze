@@ -34,7 +34,7 @@ COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
 COPY ./docker/php/php.ini /usr/local/etc/php/conf.d/
 
 # Definir o diretório de trabalho
-WORKDIR /var/www/html/
+WORKDIR /var/www/html
 
 # Copiar o código do projeto Laravel
 COPY . .
@@ -55,4 +55,4 @@ USER www-data
 EXPOSE 80
 
 # Iniciar o Apache e PHP
-CMD ["apache2-foreground", "php-fpm"]
+CMD ["apache2-foreground"]

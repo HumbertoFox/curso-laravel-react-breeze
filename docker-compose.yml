@@ -21,7 +21,7 @@ services:
             - "8080:80"
         networks:
             - app-network
-        entrypoint: [ "docker-php-entrypoint", "apache2-foreground" ]
+        entrypoint: ["/bin/bash", "-c", "composer install --no-dev --optimize-autoloader && apache2-foreground", "docker-php-entrypoint"]
 
     db:
         image: mysql:8.4.3
@@ -31,7 +31,7 @@ services:
             MYSQL_USER: ${DB_USERNAME}
             MYSQL_PASSWORD: ${DB_PASSWORD}
         volumes:
-            - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+            - mysqldata:/var/lib/mysql
         networks:
             - app-network
 
@@ -39,3 +39,7 @@ networks:
     app-network:
         name: app-network
         driver: bridge
+
+volumes:
+    mysqldata:
+        driver: local
