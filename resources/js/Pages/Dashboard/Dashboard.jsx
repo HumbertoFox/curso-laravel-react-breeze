@@ -1,9 +1,17 @@
 import BarChartUsers from '@/Components/Chart/BarChartUsers';
 import LineChartUsers from '@/Components/Chart/LineChartUsers';
+import PieChartUsers from '@/Components/Chart/PieChartUsers';
+import PolarChartUsers from '@/Components/Chart/PolarChartUsers';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
 export default function Dashboard({ data }) {
+    const renderChart = (ChartComponent, chartData) => (
+        <div className="w-full h-[50vh] flex flex-1 p-4">
+            <ChartComponent data={chartData} />
+        </div>
+    );
+
     return (
         <AuthenticatedLayout
             header={
@@ -14,7 +22,7 @@ export default function Dashboard({ data }) {
         >
             <Head title="Painel" />
 
-            <div className="max-w-1x8 font-semibold leading-tight sm:px-0 lg:px-0">
+            <div className="w-full font-semibold leading-tight sm:px-0 lg:px-0">
                 <div className="flex justify-between items-center">
                     <h2 className="text-xl font-semibold leading-tight text-gray-600 dark:text-gray-200">
                         Painel
@@ -26,17 +34,16 @@ export default function Dashboard({ data }) {
                 </div>
             </div>
 
-            <div className="max-w-8xl py-4 px-1 sm:px-0 lg:px-0">
+            <div className="w-full py-4 px-1 sm:px-0 lg:px-0">
 
                 <div className="overflow-hidden bg-white shadow-lg sm:rounded-lg dark:bg-gray-800 text-gray-900 dark:text-gray-100">
-                    <div className="flex flex-col sm:flex-row justify-between p-4 space-x-4">
-
-                        <div className='flex-1'>
-                            <BarChartUsers data={data} />
-                        </div>
-                        <div className='flex-1'>
-                            <LineChartUsers data={data} />
-                        </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
+                        {renderChart(BarChartUsers, data)}
+                        {renderChart(LineChartUsers, data)}
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
+                        {renderChart(PolarChartUsers, data)}
+                        {renderChart(PieChartUsers, data)}
                     </div>
                 </div>
             </div>

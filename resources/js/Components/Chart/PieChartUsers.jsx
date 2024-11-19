@@ -1,22 +1,20 @@
 import {
     Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
+    RadialLinearScale,
+    ArcElement,
     Tooltip,
     Legend,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
 
 ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
+    RadialLinearScale,
+    ArcElement,
     Tooltip,
     Legend,
 )
 
-const BarChartUsers = ({ data }) => {
+const PieChartUsers = ({ data }) => {
     const monthNames = [
         "Janeiro",
         "Fevereiro",
@@ -33,21 +31,6 @@ const BarChartUsers = ({ data }) => {
     ];
 
     const monthsBackgroundsColors = [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-        'rgba(255, 99, 71, 0.2)',
-        'rgba(34, 193, 195, 0.2)',
-        'rgba(253, 187, 45, 0.2)',
-        'rgba(201, 203, 207, 0.2)',
-        'rgba(255, 69, 0, 0.2)',
-        'rgba(0, 255, 127, 0.2)',
-    ];
-
-    const monthsBordersColors = [
         'rgb(255, 99, 132)',
         'rgb(54, 162, 235)',
         'rgb(255, 206, 86)',
@@ -69,15 +52,17 @@ const BarChartUsers = ({ data }) => {
         return null;
     }).filter(Boolean);
 
+    const backgroundColors = labels.map((_, index) => monthsBackgroundsColors[index % monthsBackgroundsColors.length]);
+
     const chartData = {
         ...data,
         labels: labels,
-        datasets: data?.datasets.map((dataset) => ({
+        datasets: data.datasets.map((dataset) => ({
             ...dataset,
             label: 'Cadastros',
-            backgroundColor: labels.map((_, index) => monthsBackgroundsColors[index]),
-            borderColor: labels.map((_, index) => monthsBordersColors[index]),
+            backgroundColor: backgroundColors,
             borderWidth: 1,
+            fill: true,
         })),
     };
 
@@ -88,21 +73,14 @@ const BarChartUsers = ({ data }) => {
             legend: {
                 position: 'top',
             },
-            title: {
-                display: true,
-                text: 'Gráfico de Cadastros',
-            },
-            Tooltip: {
+            tooltip: {
                 enabled: true,
-                mode: 'index',
-                intersect: false,
-                callbacks: {
-                    label: function (tooltipItem) {
-                        const label = tooltipItem.dataset.label || '';
-                        const value = tooltipItem.raw;
-                        return `${label}: ${value}`;
-                    },
-                },
+                backgroundColor: 'rgba(0,0,0,0.8)',
+            },
+        },
+        elements: {
+            arc: {
+                borderWidth: 1,
             },
         },
     };
@@ -110,7 +88,7 @@ const BarChartUsers = ({ data }) => {
     return (
         <>
             {data?.labels ? (
-                <Bar
+                <Pie
                     data={chartData}
                     options={options}
                 />
@@ -121,4 +99,4 @@ const BarChartUsers = ({ data }) => {
     );
 }
 
-export default BarChartUsers;
+export default PieChartUsers;
