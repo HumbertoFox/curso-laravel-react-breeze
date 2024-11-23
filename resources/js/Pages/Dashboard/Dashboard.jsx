@@ -40,8 +40,6 @@ export default function Dashboard({ data }) {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
                         {renderChart(BarChartUsers, data)}
                         {renderChart(LineChartUsers, data)}
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
                         {renderChart(PolarChartUsers, data)}
                         {renderChart(PieChartUsers, data)}
                     </div>
